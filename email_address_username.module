@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * The Email Address Username module makes the user register with their email address.
+ */
+
+/**
+ * Implementation of hook_form_alter.
+ *
+ * @param $form
+ * @param $form_state
+ * @param int $form_id
+ */
+function email_address_username_form_alter(&$form, &$form_state, $form_id){
+  if ($form['#form_id'] === 'user_register_form') {
+    unset($form['account']['name']); // Removes the username field
+    $form['#submit'] = array('email_address_username_registration_submit_function'); // On submit use the custom function.
+  }
+}
+
+/**
+ * On submission, copies the email value into the username value.
+ *
+ * @param $form
+ * @param array $form_state
+ */
+function email_address_username_registration_submit_function(&$form, &$form_state) {
+  $form_state['values']['name'] = $form_state['values']['mail'];
+}

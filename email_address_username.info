@@ -1,0 +1,4 @@
+core = "7.x"
+name = "Email Address Username"
+description = "On the User Registration form: removes the 'user name' field and fills its contents with the user's email address."
+package = "BedSafe"
