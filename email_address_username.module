@@ -6,7 +6,9 @@
  */
 
 /**
- * Implementation of hook_form_alter.
+ * Implementation of hook_form_alter to:
+ * 1. Hide the username field,
+ * 2. Add our custom submit function.
  *
  * @param $form
  * @param $form_state
@@ -14,13 +16,14 @@
  */
 function email_address_username_form_alter(&$form, &$form_state, $form_id){
   if ($form['#form_id'] === 'user_register_form') {
-    unset($form['account']['name']); // Removes the username field
-    $form['#submit'] = array('email_address_username_registration_submit_function'); // On submit use the custom function.
+    $form['account']['name'] = ''; // Removes the username field
+    // array_unshift is used to put the custom submit function to the front of the queue.
+    array_unshift($form['#submit'], 'email_address_username_registration_submit_function');
   }
 }
 
 /**
- * On submission, copies the email value into the username value.
+ * Submit function to copy the email address into the now invisible username field..
  *
  * @param $form
  * @param array $form_state
