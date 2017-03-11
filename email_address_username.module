@@ -16,9 +16,9 @@
  */
 function email_address_username_form_alter(&$form, &$form_state, $form_id){
   if ($form['#form_id'] === 'user_register_form') {
-    $form['account']['name'] = ''; // Removes the username field
+    $form['account']['name'] = ''; // Removes the username field.
     // array_unshift is used to put the custom submit function to the front of the queue.
-    array_unshift($form['#submit'], 'email_address_username_registration_submit_function');
+    array_unshift($form['#submit'], 'email_address_username_registration_submit');
   }
 }
 
@@ -28,6 +28,6 @@ function email_address_username_form_alter(&$form, &$form_state, $form_id){
  * @param $form
  * @param array $form_state
  */
-function email_address_username_registration_submit_function(&$form, &$form_state) {
+function email_address_username_registration_submit(&$form, &$form_state) {
   $form_state['values']['name'] = $form_state['values']['mail'];
 }
